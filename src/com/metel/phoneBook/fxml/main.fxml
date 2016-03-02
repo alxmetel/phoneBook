@@ -9,17 +9,17 @@
     <children>
         <HBox maxHeight="50.0" prefHeight="100.0">
             <children>
-                <Button mnemonicParsing="false" onAction="#showDialog" prefHeight="25.0" prefWidth="64.0" text="Add">
+                <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#showDialog" prefHeight="25.0" prefWidth="64.0" text="Add">
                     <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </HBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Edit">
+                <Button fx:id="btnEdit" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Edit">
                     <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </HBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Delete">
+                <Button fx:id="btnDelete" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Delete">
                     <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </HBox.margin>
@@ -28,8 +28,8 @@
         </HBox>
         <AnchorPane maxHeight="30.0" prefHeight="100.0">
             <children>
-                <TextField prefHeight="31.0" prefWidth="293.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="80.0" />
-                <Button layoutX="266.0" mnemonicParsing="false" text="Search" AnchorPane.rightAnchor="0.0" />
+                <TextField fx:id="txtSearch" prefHeight="31.0" prefWidth="293.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="80.0" />
+                <Button fx:id="btnSearch" layoutX="266.0" mnemonicParsing="false" text="Search" AnchorPane.rightAnchor="0.0" />
             </children>
             <VBox.margin>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -37,7 +37,7 @@
         </AnchorPane>
         <AnchorPane prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <children>
-                <TableView prefHeight="400.0" prefWidth="357.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <TableView fx:id="tblPhoneBook" prefHeight="400.0" prefWidth="357.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                         <TableColumn minWidth="100.0" text="Name" />
                         <TableColumn minWidth="100.0" prefWidth="-1.0" text="Phone Number" />
@@ -53,7 +53,7 @@
         </AnchorPane>
       <AnchorPane prefHeight="30.0" prefWidth="200.0">
          <children>
-                <Label text="Number of records:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                <Label fx:id="lblCount" text="Number of records:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
          </children>
          <VBox.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
