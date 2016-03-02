@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.metel.phoneBook.controllers.MainController">
+    <children>
+        <HBox maxHeight="50.0" prefHeight="100.0">
+            <children>
+                <Button mnemonicParsing="false" onAction="#showDialog" prefHeight="25.0" prefWidth="64.0" text="Add">
+                    <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </HBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Edit">
+                    <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </HBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Delete">
+                    <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+        <AnchorPane maxHeight="30.0" prefHeight="100.0">
+            <children>
+                <TextField prefHeight="31.0" prefWidth="293.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="80.0" />
+                <Button layoutX="266.0" mnemonicParsing="false" text="Search" AnchorPane.rightAnchor="0.0" />
+            </children>
+            <VBox.margin>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </VBox.margin>
+        </AnchorPane>
+        <AnchorPane prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <children>
+                <TableView prefHeight="400.0" prefWidth="357.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                        <TableColumn minWidth="100.0" text="Name" />
+                        <TableColumn minWidth="100.0" prefWidth="-1.0" text="Phone Number" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </children>
+            <VBox.margin>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </VBox.margin>
+        </AnchorPane>
+      <AnchorPane prefHeight="30.0" prefWidth="200.0">
+         <children>
+                <Label text="Number of records:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </VBox.margin>
+      </AnchorPane>
+    </children>
+</VBox>
