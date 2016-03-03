@@ -26,4 +26,11 @@ public class Person {
         this.phone = phone;
     }
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }
