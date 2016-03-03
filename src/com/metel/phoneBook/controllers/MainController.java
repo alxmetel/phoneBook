@@ -4,6 +4,7 @@ import com.metel.phoneBook.interfaces.impls.CollectionPhoneBook;
 import com.metel.phoneBook.objects.Person;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -20,6 +22,8 @@ import java.io.IOException;
 public class MainController {
 
     private CollectionPhoneBook phoneBookImpl = new CollectionPhoneBook();
+
+    private Stage mainStage;
 
     @FXML
     private Button btnAdd;
@@ -54,11 +58,25 @@ public class MainController {
     private Stage editDialogStage;
 
 
+    public void setMainStage(Stage mainStage) {
+        this.mainStage = mainStage;
+    }
+
     @FXML
     private void initialize() {
         colName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
         colPhone.setCellValueFactory(new PropertyValueFactory<Person, String>("phone"));
+        initListeners();
+        fillData();
+        initLoader();
+    }
 
+    private void fillData() {
+        phoneBookImpl.fillTestData();
+        tblPhoneBook.setItems(phoneBookImpl.getPersonList());
+    }
+
+    private void initListeners() {
         phoneBookImpl.getPersonList().addListener(new ListChangeListener<Person>() {
             @Override
             public void onChanged(Change<? extends Person> c) {
@@ -66,10 +84,18 @@ public class MainController {
             }
         });
 
-        phoneBookImpl.fillTestData();
+        tblPhoneBook.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() == 2) {
+                    editDialogController.setPerson((Person)tblPhoneBook.getSelectionModel().getSelectedItem());
+                    showDialog();
+                }
+            }
+        });
+    }
 
-        tblPhoneBook.setItems(phoneBookImpl.getPersonList());
-
+    private void initLoader() {
         try {
 
             fxmlLoader.setLocation(getClass().getResource("../fxml/edit.fxml"));
@@ -96,41 +122,36 @@ public class MainController {
 
         Button clickedButton = (Button) source;
 
-        Person selectedPerson = (Person) tblPhoneBook.getSelectionModel().getSelectedItem();
-
-        Window parentWindow = ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        editDialogController.setPerson(selectedPerson);
-
         switch (clickedButton.getId()) {
             case "btnAdd":
+                editDialogController.setPerson(new Person());
+                showDialog();
+                phoneBookImpl.add(editDialogController.getPerson());
                 break;
 
             case "btnEdit":
-                showDialog(parentWindow);
+                editDialogController.setPerson((Person)tblPhoneBook.getSelectionModel().getSelectedItem());
+                showDialog();
                 break;
 
             case "btnDelete":
+                phoneBookImpl.delete((Person)tblPhoneBook.getSelectionModel().getSelectedItem());
                 break;
         }
-
     }
 
-    private void showDialog(Window parentWindow) {
+    private void showDialog() {
 
         if (editDialogStage==null) {
             editDialogStage = new Stage();
-            editDialogStage.setTitle("Редактирование записи");
+            editDialogStage.setTitle("Record editing");
             editDialogStage.setMinHeight(150);
             editDialogStage.setMinWidth(300);
             editDialogStage.setResizable(false);
             editDialogStage.setScene(new Scene(fxmlEdit));
             editDialogStage.initModality(Modality.WINDOW_MODAL);
-            editDialogStage.initOwner(parentWindow);
+            editDialogStage.initOwner(mainStage);
         }
-
-//      editDialogStage.showAndWait(); // для ожидания закрытия окна
-
-        editDialogStage.show();
+      editDialogStage.showAndWait(); // для ожидания закрытия окна
     }
 }

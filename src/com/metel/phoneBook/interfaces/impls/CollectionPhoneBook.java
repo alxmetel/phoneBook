@@ -3,10 +3,7 @@ package com.metel.phoneBook.interfaces.impls;
 import com.metel.phoneBook.interfaces.PhoneBook;
 import com.metel.phoneBook.objects.Person;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-
-import java.util.ArrayList;
 
 // класс реализовывает интерфейс с помощью коллекции
 public class CollectionPhoneBook implements PhoneBook {
