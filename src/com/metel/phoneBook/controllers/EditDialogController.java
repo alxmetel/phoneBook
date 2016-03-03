@@ -3,12 +3,16 @@ package com.metel.phoneBook.controllers;
 import com.metel.phoneBook.objects.Person;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class EditDialogController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class EditDialogController implements Initializable {
 
     @FXML
     private TextField txtName;
@@ -22,8 +26,9 @@ public class EditDialogController {
     @FXML
     private Button btnCancel;
 
-
     private Person person;
+
+    private ResourceBundle resourceBundle;
 
      public void setPerson(Person person) {
         if(person == null) {
@@ -48,5 +53,10 @@ public class EditDialogController {
         person.setPhone(txtPhoneNumber.getText());
         person.setName(txtName.getText());
         actionClose(actionEvent);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.resourceBundle = resources;
     }
 }

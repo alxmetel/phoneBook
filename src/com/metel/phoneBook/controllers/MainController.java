@@ -7,7 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,11 +15,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
-public class MainController {
+public class MainController implements Initializable {
 
     private CollectionPhoneBook phoneBookImpl = new CollectionPhoneBook();
 
@@ -57,18 +59,21 @@ public class MainController {
     private EditDialogController editDialogController;
     private Stage editDialogStage;
 
+    private ResourceBundle resourceBundle;
 
-    public void setMainStage(Stage mainStage) {
-        this.mainStage = mainStage;
-    }
-
-    @FXML
-    private void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.resourceBundle = resources;
         colName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
         colPhone.setCellValueFactory(new PropertyValueFactory<Person, String>("phone"));
         initListeners();
         fillData();
         initLoader();
+    }
+
+
+    public void setMainStage(Stage mainStage) {
+        this.mainStage = mainStage;
     }
 
     private void fillData() {
@@ -99,6 +104,7 @@ public class MainController {
         try {
 
             fxmlLoader.setLocation(getClass().getResource("../fxml/edit.fxml"));
+            fxmlLoader.setResources(ResourceBundle.getBundle("com.metel.phoneBook.bundles.Locale", new Locale("ru")));
             fxmlEdit = fxmlLoader.load();
             editDialogController = fxmlLoader.getController();
 
@@ -108,7 +114,7 @@ public class MainController {
     }
 
     private void updateCountLabel() {
-        lblCount.setText("Number of records: " + phoneBookImpl.getPersonList().size());
+        lblCount.setText(resourceBundle.getString("count") + ": " + phoneBookImpl.getPersonList().size());
     }
 
     public void actionButtonPressed(ActionEvent actionEvent) {
@@ -144,7 +150,7 @@ public class MainController {
 
         if (editDialogStage==null) {
             editDialogStage = new Stage();
-            editDialogStage.setTitle("Record editing");
+            editDialogStage.setTitle(resourceBundle.getString("edit_window"));
             editDialogStage.setMinHeight(150);
             editDialogStage.setMinWidth(300);
             editDialogStage.setResizable(false);
