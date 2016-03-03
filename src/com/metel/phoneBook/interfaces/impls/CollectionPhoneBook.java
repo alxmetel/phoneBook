@@ -2,13 +2,15 @@ package com.metel.phoneBook.interfaces.impls;
 
 import com.metel.phoneBook.interfaces.PhoneBook;
 import com.metel.phoneBook.objects.Person;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
 // класс реализовывает интерфейс с помощью коллекции
 public class CollectionPhoneBook implements PhoneBook {
 
-    private ArrayList<Person> personList = new ArrayList<>();
+    private ObservableList<Person> personList = FXCollections.observableArrayList();
 
     @Override
     public void add(Person person) {
@@ -25,7 +27,7 @@ public class CollectionPhoneBook implements PhoneBook {
     public void edit(Person person) {
     }
 
-    public ArrayList<Person> getPersonList() {
+    public ObservableList<Person> getPersonList() {
         return personList;
     }
 

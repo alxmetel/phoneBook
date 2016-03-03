@@ -1,5 +1,7 @@
 package com.metel.phoneBook.controllers;
 
+import com.metel.phoneBook.interfaces.impls.CollectionPhoneBook;
+import com.metel.phoneBook.objects.Person;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,12 +9,15 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MainController {
+
+    private CollectionPhoneBook phoneBookImpl = new CollectionPhoneBook();
 
     @FXML
     private Button btnAdd;
@@ -33,7 +38,29 @@ public class MainController {
     private TableView tblPhoneBook;
 
     @FXML
+    private TableColumn<Person, String> colName;
+
+    @FXML
+    private TableColumn<Person, String> colPhone;
+
+    @FXML
     private Label lblCount;
+
+    @FXML
+    private void initialize() {
+        colName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+        colPhone.setCellValueFactory(new PropertyValueFactory<Person, String>("phone"));
+
+        phoneBookImpl.fillTestData();
+
+        tblPhoneBook.setItems(phoneBookImpl.getPersonList());
+
+        updateCountLabel();
+    }
+
+    private void updateCountLabel() {
+        lblCount.setText("Number of records: " + phoneBookImpl.getPersonList().size());
+    }
 
 
     public void showDialog(ActionEvent actionEvent) {
