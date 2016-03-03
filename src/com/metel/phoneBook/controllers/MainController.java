@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 
@@ -47,6 +48,12 @@ public class MainController {
     @FXML
     private Label lblCount;
 
+    private Parent fxmlEdit;
+    private FXMLLoader fxmlLoader = new FXMLLoader();
+    private EditDialogController editDialogController;
+    private Stage editDialogStage;
+
+
     @FXML
     private void initialize() {
         colName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
@@ -62,57 +69,68 @@ public class MainController {
         phoneBookImpl.fillTestData();
 
         tblPhoneBook.setItems(phoneBookImpl.getPersonList());
+
+        try {
+
+            fxmlLoader.setLocation(getClass().getResource("../fxml/edit.fxml"));
+            fxmlEdit = fxmlLoader.load();
+            editDialogController = fxmlLoader.getController();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateCountLabel() {
         lblCount.setText("Number of records: " + phoneBookImpl.getPersonList().size());
     }
 
-
-    public void showDialog(ActionEvent actionEvent) {
+    public void actionButtonPressed(ActionEvent actionEvent) {
 
         Object source = actionEvent.getSource();
 
         // если нажата не кнопка - выходим из метода
-        if(!(source instanceof Button)) {
+        if (!(source instanceof Button)) {
             return;
         }
 
         Button clickedButton = (Button) source;
 
-        Person selectedPerson = (Person)tblPhoneBook.getSelectionModel().getSelectedItem();
+        Person selectedPerson = (Person) tblPhoneBook.getSelectionModel().getSelectedItem();
 
-        switch (clickedButton.getId()){
+        Window parentWindow = ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        editDialogController.setPerson(selectedPerson);
+
+        switch (clickedButton.getId()) {
             case "btnAdd":
-                System.out.println("add "+selectedPerson);
                 break;
 
             case "btnEdit":
-                System.out.println("edit " + selectedPerson);
+                showDialog(parentWindow);
                 break;
-
 
             case "btnDelete":
-                System.out.println("delete " + selectedPerson);
                 break;
         }
 
+    }
 
-        try {
+    private void showDialog(Window parentWindow) {
 
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("../fxml/edit.fxml"));
-            stage.setTitle("Editing the record");
-            stage.setMinHeight(150);
-            stage.setMinWidth(300);
-            stage.setResizable(false);
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (editDialogStage==null) {
+            editDialogStage = new Stage();
+            editDialogStage.setTitle("Редактирование записи");
+            editDialogStage.setMinHeight(150);
+            editDialogStage.setMinWidth(300);
+            editDialogStage.setResizable(false);
+            editDialogStage.setScene(new Scene(fxmlEdit));
+            editDialogStage.initModality(Modality.WINDOW_MODAL);
+            editDialogStage.initOwner(parentWindow);
         }
+
+//      editDialogStage.showAndWait(); // для ожидания закрытия окна
+
+        editDialogStage.show();
     }
 }

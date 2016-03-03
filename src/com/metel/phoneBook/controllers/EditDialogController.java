@@ -13,12 +13,6 @@ import javafx.stage.Stage;
 public class EditDialogController {
 
     @FXML
-    private Label lblName;
-
-    @FXML
-    private Label lblPhoneNumber;
-
-    @FXML
     private TextField txtName;
 
     @FXML
@@ -30,18 +24,24 @@ public class EditDialogController {
     @FXML
     private Button btnCancel;
 
+
     private Person person;
 
     public void actionClose(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        stage.hide();
     }
 
     public void setPerson(Person person) {
         this.person = person;
-
         txtName.setText(person.getName());
         txtPhoneNumber.setText(person.getPhone());
+    }
+
+    public void actionSave(ActionEvent actionEvent) {
+        person.setPhone(txtPhoneNumber.getText());
+        person.setName(txtName.getText());
+        actionClose(actionEvent);
     }
 }
