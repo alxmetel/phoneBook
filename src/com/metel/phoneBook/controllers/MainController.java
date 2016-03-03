@@ -2,6 +2,7 @@ package com.metel.phoneBook.controllers;
 
 import com.metel.phoneBook.interfaces.impls.CollectionPhoneBook;
 import com.metel.phoneBook.objects.Person;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,11 +52,16 @@ public class MainController {
         colName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
         colPhone.setCellValueFactory(new PropertyValueFactory<Person, String>("phone"));
 
+        phoneBookImpl.getPersonList().addListener(new ListChangeListener<Person>() {
+            @Override
+            public void onChanged(Change<? extends Person> c) {
+                updateCountLabel();
+            }
+        });
+
         phoneBookImpl.fillTestData();
 
         tblPhoneBook.setItems(phoneBookImpl.getPersonList());
-
-        updateCountLabel();
     }
 
     private void updateCountLabel() {
