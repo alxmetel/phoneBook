@@ -1,6 +1,7 @@
 package com.metel.phoneBook.controllers;
 
 import com.metel.phoneBook.objects.Person;
+import com.metel.phoneBook.utils.DialogManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,9 +51,21 @@ public class EditDialogController implements Initializable {
     }
 
     public void actionSave(ActionEvent actionEvent) {
+        if(!checkValues()) {
+            return;
+        }
+
         person.setPhone(txtPhoneNumber.getText());
         person.setName(txtName.getText());
         actionClose(actionEvent);
+    }
+
+    private boolean checkValues() {
+        if (txtName.getText().trim().length()==0 || txtPhoneNumber.getText().trim().length()==0){
+            DialogManager.showInfoDialog(resourceBundle.getString("error"), resourceBundle.getString("fill_field"));
+            return false;
+        }
+        return true;
     }
 
     @Override

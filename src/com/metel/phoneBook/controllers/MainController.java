@@ -2,6 +2,7 @@ package com.metel.phoneBook.controllers;
 
 import com.metel.phoneBook.interfaces.impls.CollectionPhoneBook;
 import com.metel.phoneBook.objects.Person;
+import com.metel.phoneBook.utils.DialogManager;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -145,6 +146,8 @@ public class MainController implements Initializable {
             return;
         }
 
+        Person selectedPerson = (Person) tblPhoneBook.getSelectionModel().getSelectedItem();
+
         Button clickedButton = (Button) source;
 
         switch (clickedButton.getId()) {
@@ -155,14 +158,30 @@ public class MainController implements Initializable {
                 break;
 
             case "btnEdit":
-                editDialogController.setPerson((Person)tblPhoneBook.getSelectionModel().getSelectedItem());
+                if (!personIsSelected(selectedPerson)) {
+                    return;
+                }
+
+                editDialogController.setPerson(selectedPerson);
                 showDialog();
                 break;
 
             case "btnDelete":
-                phoneBookImpl.delete((Person)tblPhoneBook.getSelectionModel().getSelectedItem());
+                if (!personIsSelected(selectedPerson)) {
+                    return;
+                }
+
+                phoneBookImpl.delete(selectedPerson);
                 break;
         }
+    }
+
+    private boolean personIsSelected(Person selectedPerson) {
+        if(selectedPerson == null){
+            DialogManager.showInfoDialog(resourceBundle.getString("error"), resourceBundle.getString("select_person"));
+            return false;
+        }
+        return true;
     }
 
     private void showDialog() {
