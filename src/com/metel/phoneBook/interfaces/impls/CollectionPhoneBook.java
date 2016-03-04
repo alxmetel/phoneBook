@@ -30,11 +30,11 @@ public class CollectionPhoneBook implements PhoneBook {
     }
 
     public void fillTestData() {
-        personList.add(new Person("Name1", "111111"));
-        personList.add(new Person("Name2", "222222"));
-        personList.add(new Person("Name3", "333333"));
-        personList.add(new Person("Name4", "444444"));
-        personList.add(new Person("Name5", "555555"));
+        personList.add(new Person(1, "Name1", "111111"));
+        personList.add(new Person(2, "Name2", "222222"));
+        personList.add(new Person(3, "Name3", "333333"));
+        personList.add(new Person(4, "Name4", "444444"));
+        personList.add(new Person(5, "Name5", "555555"));
     }
 
     public void print() {

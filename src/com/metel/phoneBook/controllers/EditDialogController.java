@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
 public class EditDialogController implements Initializable {
 
     @FXML
@@ -31,10 +32,13 @@ public class EditDialogController implements Initializable {
 
     private ResourceBundle resourceBundle;
 
+    private boolean saveClicked = false;// для определения нажатой кнопки
+
      public void setPerson(Person person) {
         if(person == null) {
             return;
         }
+        saveClicked = false;
         this.person = person;
         txtName.setText(person.getName());
         txtPhoneNumber.setText(person.getPhone());
@@ -71,5 +75,9 @@ public class EditDialogController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resourceBundle = resources;
+    }
+
+    public boolean isSaveClicked() {
+        return saveClicked;
     }
 }

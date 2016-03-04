@@ -1,18 +1,21 @@
 package com.metel.phoneBook.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Person {
 
+    private SimpleIntegerProperty id = new SimpleIntegerProperty();
     private SimpleStringProperty name = new SimpleStringProperty("");
     private SimpleStringProperty phone = new SimpleStringProperty("");
 
     public Person() {
     }
 
-    public Person(String name, String phone) {
-        this.name = new SimpleStringProperty(name);
+    public Person(int id, String fio, String phone) {
+        this.name = new SimpleStringProperty(fio);
         this.phone = new SimpleStringProperty(phone);
+        this.id = new SimpleIntegerProperty(id);
     }
 
     public String getName() {
@@ -37,6 +40,18 @@ public class Person {
 
     public SimpleStringProperty phoneProperty() {
         return phone;
+    }
+
+    public int getId() {
+        return id.get();
+    }
+
+    public SimpleIntegerProperty idProperty() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
     }
 
     @Override
