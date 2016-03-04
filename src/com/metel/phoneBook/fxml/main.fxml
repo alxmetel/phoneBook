@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import org.controlsfx.control.textfield.*?>
 <?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -9,17 +11,17 @@
     <children>
         <HBox maxHeight="50.0" prefHeight="100.0">
             <children>
-                <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="92.0" text="%add">
+                <Button fx:id="btnAdd" minWidth="80.0" mnemonicParsing="false" onAction="#actionButtonPressed" text="%add">
                     <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </HBox.margin>
                 </Button>
-                <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="92.0" text="%edit">
+                <Button fx:id="btnEdit" minWidth="80.0" mnemonicParsing="false" onAction="#actionButtonPressed" text="%edit">
                     <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </HBox.margin>
                 </Button>
-                <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="92.0" text="%delete">
+                <Button fx:id="btnDelete" minWidth="80.0" mnemonicParsing="false" onAction="#actionButtonPressed" text="%delete">
                     <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </HBox.margin>
@@ -28,8 +30,8 @@
         </HBox>
         <AnchorPane maxHeight="30.0" prefHeight="100.0">
             <children>
-                <TextField fx:id="txtSearch" prefHeight="31.0" prefWidth="293.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="80.0" />
-                <Button fx:id="btnSearch" layoutX="266.0" mnemonicParsing="false" text="%search" AnchorPane.rightAnchor="0.0" />
+                <CustomTextField fx:id="txtSearch" prefHeight="31.0" prefWidth="293.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="80.0" />
+                <Button fx:id="btnSearch" layoutX="266.0" mnemonicParsing="false" onAction="#actionSearch" text="%search" AnchorPane.rightAnchor="0.0" />
             </children>
             <VBox.margin>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -51,13 +53,13 @@
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </VBox.margin>
         </AnchorPane>
-      <AnchorPane prefHeight="30.0" prefWidth="200.0">
-         <children>
+        <AnchorPane prefHeight="30.0" prefWidth="200.0">
+            <children>
                 <Label fx:id="lblCount" text="%count" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
-         </children>
-         <VBox.margin>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </VBox.margin>
-      </AnchorPane>
+            </children>
+            <VBox.margin>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </VBox.margin>
+        </AnchorPane>
     </children>
 </VBox>
