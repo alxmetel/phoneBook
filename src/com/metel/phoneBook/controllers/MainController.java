@@ -1,8 +1,10 @@
 package com.metel.phoneBook.controllers;
 
 import com.metel.phoneBook.interfaces.impls.CollectionPhoneBook;
+import com.metel.phoneBook.objects.Lang;
 import com.metel.phoneBook.objects.Person;
 import com.metel.phoneBook.utils.DialogManager;
+import com.metel.phoneBook.utils.LocaleManager;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -26,9 +28,10 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Locale;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
-public class MainController implements Initializable {
+public class MainController extends Observable implements Initializable {
 
     private CollectionPhoneBook phoneBookImpl = new CollectionPhoneBook();
 
@@ -61,12 +64,19 @@ public class MainController implements Initializable {
     @FXML
     private Label lblCount;
 
+    @FXML
+    private ComboBox comboLocales;
+
+
     private Parent fxmlEdit;
     private FXMLLoader fxmlLoader = new FXMLLoader();
     private EditDialogController editDialogController;
     private Stage editDialogStage;
     private ResourceBundle resourceBundle;
     private ObservableList<Person> backupList;
+
+    private static final String RU_CODE="ru";
+    private static final String EN_CODE="en";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -95,13 +105,35 @@ public class MainController implements Initializable {
     }
 
     private void fillData() {
+        fillTable();
+        fillLangComboBox();
+    }
+
+    private void fillTable() {
         phoneBookImpl.fillTestData();
         backupList = FXCollections.observableArrayList();
         backupList.addAll(phoneBookImpl.getPersonList());
         tblPhoneBook.setItems(phoneBookImpl.getPersonList());
     }
 
+    private void fillLangComboBox() {
+
+        Lang langRU = new Lang(0, RU_CODE, resourceBundle.getString("ru"), LocaleManager.RU_LOCALE);
+        Lang langEN = new Lang(1, EN_CODE, resourceBundle.getString("en"), LocaleManager.EN_LOCALE);
+
+        comboLocales.getItems().add(langRU);
+        comboLocales.getItems().add(langEN);
+
+        if (LocaleManager.getCurrentLang() == null){// по-умолчанию показывать выбранный русский язык (можно текущие настройки языка сохранять в файл)
+            comboLocales.getSelectionModel().select(0);
+        }else{
+            comboLocales.getSelectionModel().select(LocaleManager.getCurrentLang().getIndex());
+        }
+    }
+
     private void initListeners() {
+
+        // слушает изменения в коллекции для обновления надписи "Кол-во записей"
         phoneBookImpl.getPersonList().addListener(new ListChangeListener<Person>() {
             @Override
             public void onChanged(Change<? extends Person> c) {
@@ -109,13 +141,28 @@ public class MainController implements Initializable {
             }
         });
 
+
+        // слушает двойное нажатие для редактирования записи
         tblPhoneBook.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 2) {
-                    editDialogController.setPerson((Person)tblPhoneBook.getSelectionModel().getSelectedItem());
+                    editDialogController.setPerson((Person) tblPhoneBook.getSelectionModel().getSelectedItem());
                     showDialog();
                 }
+            }
+        });
+
+        // слушает изменение языка
+        comboLocales.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Lang selectedLang = (Lang) comboLocales.getSelectionModel().getSelectedItem();
+                LocaleManager.setCurrentLang(selectedLang);
+
+                // уведомить всех слушателей, что произошла смена языка
+                setChanged();
+                notifyObservers(selectedLang);
             }
         });
     }
