@@ -61,6 +61,7 @@ public class EditDialogController implements Initializable {
 
         person.setPhone(txtPhoneNumber.getText());
         person.setName(txtName.getText());
+        saveClicked = true;
         actionClose(actionEvent);
     }
 

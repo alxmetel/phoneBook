@@ -12,8 +12,8 @@ public class Person {
     public Person() {
     }
 
-    public Person(int id, String fio, String phone) {
-        this.name = new SimpleStringProperty(fio);
+    public Person(int id, String name, String phone) {
+        this.name = new SimpleStringProperty(name);
         this.phone = new SimpleStringProperty(phone);
         this.id = new SimpleIntegerProperty(id);
     }
